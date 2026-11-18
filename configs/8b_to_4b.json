@@ -1,0 +1,56 @@
+{
+  "direction": "8B_to_4B",
+  "sender": {
+    "model_id": "Qwen/Qwen3-8B",
+    "path": "/mnt/hd/lewis/models/Qwen3-8B",
+    "num_layers": 36,
+    "num_kv_heads": 8,
+    "head_dim": 128,
+    "rope_theta": 1000000.0,
+    "max_position_embeddings": 40960,
+    "parameter_count": 8190735360,
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+  },
+  "receiver": {
+    "model_id": "Qwen/Qwen3-4B",
+    "path": "/mnt/hd/lewis/models/Qwen3-4B",
+    "num_layers": 36,
+    "num_kv_heads": 8,
+    "head_dim": 128,
+    "rope_theta": 1000000.0,
+    "max_position_embeddings": 40960,
+    "parameter_count": 4022468096,
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+  },
+  "adapter": {
+    "expansion": 16,
+    "gate_init": 0.5,
+    "dtype": "bfloat16"
+  },
+  "training": {
+    "sender_device": "cuda:0",
+    "receiver_device": "cuda:1",
+    "adapter_device": "cuda:1",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "phase1_steps": 2000,
+    "phase2_steps": 2000,
+    "max_prompt_tokens": 512,
+    "max_trace_tokens": 768,
+    "enable_thinking": true,
+    "context_aware_probability": 0.5,
+    "seed": 42,
+    "log_every": 1,
+    "save_every": 100
+  },
+  "paths": {
+    "train_data": "/mnt/hd/lewis/DenseLatentCommunication/data/train.jsonl",
+    "trace_data": "/mnt/nfs/cloud/data/DenseLatentCommunication/traces_8B_to_4B.jsonl",
+    "evaluation_data": "/mnt/hd/lewis/DenseLatentCommunication/data/eval.jsonl",
+    "output_dir": "/mnt/nfs/cloud/checkpoints/DenseLatentCommunication/8B_to_4B",
+    "phase1_checkpoint": "/mnt/hd/lewis/DenseLatentCommunication/8B_to_4B/phase1_8B_to_4B.pt",
+    "phase2_checkpoint": "/mnt/nfs/cloud/checkpoints/DenseLatentCommunication/8B_to_4B/phase2_8B_to_4B.pt"
+  }
+}

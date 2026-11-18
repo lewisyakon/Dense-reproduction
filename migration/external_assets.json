@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "method": "Dense Latent Communication",
+  "snapshot_date": "2026-11-18",
+  "assets": [
+    {
+      "id": "model_qwen3_0_6b",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/SwaTReproduction/models/qwen/Qwen3-0.6B",
+      "recommended_path": "assets/models/qwen/Qwen3-0.6B",
+      "size_hint": "about 1.5 GiB",
+      "profiles": ["train", "evaluate", "resume"]
+    },
+    {
+      "id": "model_qwen3_1_7b",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/SwaTReproduction/models/qwen/Qwen3-1.7B",
+      "recommended_path": "assets/models/qwen/Qwen3-1.7B",
+      "size_hint": "about 3.5 GiB",
+      "profiles": ["train", "evaluate", "resume"]
+    },
+    {
+      "id": "model_qwen3_4b",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/SwaTReproduction/models/qwen/Qwen3-4B",
+      "recommended_path": "assets/models/qwen/Qwen3-4B",
+      "size_hint": "about 8 GiB",
+      "profiles": ["train", "evaluate", "resume"]
+    },
+    {
+      "id": "dense_training_data",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/Subproblem4UnifiedReproduction/data/DenseLatentCommunication",
+      "recommended_path": "assets/unified/data/DenseLatentCommunication",
+      "size_hint": "81 MiB",
+      "profiles": ["train", "resume"]
+    },
+    {
+      "id": "canonical_evaluation_data",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/Subproblem4UnifiedReproduction/data/canonical/eval",
+      "recommended_path": "assets/unified/data/canonical/eval",
+      "size_hint": "part of the shared canonical data tree",
+      "profiles": ["evaluate"]
+    },
+    {
+      "id": "dense_checkpoints",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/Subproblem4UnifiedReproduction/experiments/stage1/converters/dense_gsm8k_math_algebra_arc_c",
+      "recommended_path": "assets/unified/experiments/stage1/converters/dense_gsm8k_math_algebra_arc_c",
+      "size_hint": "3.0 GiB",
+      "profiles": ["resume", "evaluate", "results"]
+    },
+    {
+      "id": "dense_original_evaluations",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/Subproblem4UnifiedReproduction/experiments/stage1/evaluations/dense_original_data_v1",
+      "recommended_path": "assets/unified/experiments/stage1/evaluations/dense_original_data_v1",
+      "size_hint": "246 MiB",
+      "profiles": ["results"]
+    },
+    {
+      "id": "dense_untruncated_hotpotqa",
+      "kind": "directory",
+      "current_path": "/mnt/hd2/lewis/Subproblem4UnifiedReproduction/experiments/stage1/evaluations/dense_hotpotqa_no_prompt_limit_v1",
+      "recommended_path": "assets/unified/experiments/stage1/evaluations/dense_hotpotqa_no_prompt_limit_v1",
+      "size_hint": "155 MiB",
+      "profiles": ["results"]
+    }
+  ]
+}
+
