@@ -11,8 +11,15 @@
 - 正式训练、P1/P4 测评和 HotpotQA 无 token 上限补测入口；
 - 固定提示词 ZIP、正式结果、实验计划及跨方法对比文档。
 
-模型、规范化数据、Phase 1/2 权重和逐样本结果不进入 Git。完整清单见
-`migration/external_assets.json`。
+三份最终 Phase-2 推理 adapter 已通过 Git LFS 纳入 `weights/`。模型、规范化数据、
+Phase-1/可恢复训练状态和逐样本结果不进入 Git，完整清单见
+`migration/external_assets.json`。克隆后执行：
+
+```bash
+git lfs install
+git lfs pull
+python tools/verify_included_weights.py
+```
 
 ## 迁移流程
 
@@ -24,6 +31,9 @@ python tools/verify_external_assets.py --mode current --profile results
 # 制作可离线 clone 的代码 bundle
 bash tools/create_code_bundle.sh /path/to/export
 ```
+
+Git bundle 只包含 LFS 指针，不包含权重实体；完整离线迁移还需复制 `weights/`，
+或者在有网络时从 GitHub 执行 `git lfs pull`。
 
 按 manifest 将每个 `current_path` 复制到新仓库的 `recommended_path` 后执行：
 

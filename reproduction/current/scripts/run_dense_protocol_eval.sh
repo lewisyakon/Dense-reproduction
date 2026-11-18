@@ -2,10 +2,12 @@
 set -euo pipefail
 umask 027
 
-readonly PROJECT_ROOT="/home/lewis/Subproblem4UnifiedReproduction"
-readonly ASSET_ROOT="/mnt/hd2/lewis/Subproblem4UnifiedReproduction"
-readonly DENSE_ROOT="${PROJECT_ROOT}/vendor/DenseLatentCommunication"
-readonly PYTHON_BIN="/mnt/hd/lewis/conda-envs/c2c/bin/python"
+readonly REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+readonly PROJECT_ROOT="${DENSE_PROJECT_ROOT:-${REPO_ROOT}/reproduction/current}"
+readonly ASSET_ROOT="${DENSE_ASSET_ROOT:-${REPO_ROOT}/assets/unified}"
+readonly DENSE_ROOT="${DENSE_REPO_ROOT:-${REPO_ROOT}}"
+readonly PYTHON_BIN="${DENSE_PYTHON:-python}"
+readonly MODEL_ROOT="${DENSE_MODEL_ROOT:-${REPO_ROOT}/assets/models/qwen}"
 readonly PHYSICAL_GPU="${DENSE_EVAL_GPU:-0}"
 readonly EVAL_SLOT="${DENSE_EVAL_SLOT:-0}"
 readonly MIN_FREE_MIB="${DENSE_EVAL_MIN_FREE_MIB:-18000}"
@@ -50,7 +52,14 @@ case "${TASK}" in
 esac
 
 readonly CONFIG="${PROJECT_ROOT}/configs/stage1/converters/dense_gsm8k_math_algebra_arc_c/${RUN_NAME}.json"
-readonly CHECKPOINT="${ASSET_ROOT}/experiments/stage1/converters/dense_gsm8k_math_algebra_arc_c/${RUN_NAME}/phase2.pt"
+case "${DIRECTION}" in
+  qwen3_0.6b_to_1.7b) readonly WEIGHT_PAIR="M1" ;;
+  qwen3_0.6b_to_4b) readonly WEIGHT_PAIR="M2" ;;
+  qwen3_4b_to_0.6b) readonly WEIGHT_PAIR="M3" ;;
+esac
+readonly LEGACY_CHECKPOINT="${ASSET_ROOT}/experiments/stage1/converters/dense_gsm8k_math_algebra_arc_c/${RUN_NAME}/phase2.pt"
+readonly INCLUDED_CHECKPOINT="${REPO_ROOT}/weights/${WEIGHT_PAIR}/phase2.pt"
+readonly CHECKPOINT="${DENSE_EVAL_CHECKPOINT:-$([[ -f "${LEGACY_CHECKPOINT}" ]] && printf '%s' "${LEGACY_CHECKPOINT}" || printf '%s' "${INCLUDED_CHECKPOINT}")}"
 readonly DEFAULT_OUTPUT_ROOT="${ASSET_ROOT}/experiments/stage1/evaluations/dense_original_data_v1"
 readonly OUTPUT_ROOT="${DENSE_EVAL_OUTPUT_ROOT:-${DEFAULT_OUTPUT_ROOT}}"
 readonly OUTPUT="${OUTPUT_ROOT}/${RUN_NAME}/${TASK}/protocol_${PROTOCOL}"
@@ -94,6 +103,7 @@ fi
   --task "${TASK}" \
   --protocol "${PROTOCOL}" \
   --output-dir "${OUTPUT}" \
+  --model-root "${MODEL_ROOT}" \
   "${extra_args[@]}"
 
 "${PYTHON_BIN}" -c \

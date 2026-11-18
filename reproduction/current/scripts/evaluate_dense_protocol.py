@@ -12,6 +12,7 @@ import string
 import sys
 import time
 from collections import Counter
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -193,6 +194,11 @@ def main() -> None:
     parser.add_argument("--task", choices=sorted(TASK_DEFAULTS), required=True)
     parser.add_argument("--protocol", choices=("a", "c"), required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--model-root",
+        type=Path,
+        help="Optional directory containing Qwen model folders; overrides model paths in the saved config.",
+    )
     parser.add_argument("--max-new-tokens", type=int)
     parser.add_argument(
         "--no-prompt-truncation",
@@ -203,6 +209,12 @@ def main() -> None:
     args = parser.parse_args()
 
     cfg = load_config(args.config)
+    if args.model_root is not None:
+        cfg = replace(
+            cfg,
+            sender=replace(cfg.sender, path=str(args.model_root / Path(cfg.sender.path).name)),
+            receiver=replace(cfg.receiver, path=str(args.model_root / Path(cfg.receiver.path).name)),
+        )
     set_seed(cfg.training.seed)
     dtype = parse_dtype(cfg.adapter.dtype)
     sender_tokenizer = load_tokenizer(cfg.sender, local_files_only=True)

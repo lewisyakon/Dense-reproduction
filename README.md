@@ -4,6 +4,9 @@
 > `reproduction/current/` 保存本次 M1/M2/M3 正式训练和统一测评所用的配置与队列；
 > 大型资产的迁移方法见 [`MIGRATION.md`](MIGRATION.md)。
 
+三份完成训练的 Phase-2 adapter 已通过 Git LFS 纳入 `weights/`。克隆后执行
+`git lfs pull` 即可直接加载；清单见 `weights/manifest.json`。
+
 This directory implements the minimal reproduction described in
 `qwen3_4b_8b_dense_kv_minimal_reproduction_typora.md` for the two independent
 directions:

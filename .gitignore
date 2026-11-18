@@ -28,3 +28,6 @@ dist/
 .env
 .vscode/
 .idea/
+
+# Final Phase-2 inference adapters are intentionally versioned through Git LFS.
+!weights/**/*.pt
